@@ -1,0 +1,253 @@
+<html dir="ltr" lang="en">
+<head>
+<!--
+* ***************************************************************
+*  This software and related documentation are provided under a
+*  license agreement containing restrictions on use and
+*  disclosure and are protected by intellectual property
+*  laws. Except as expressly permitted in your license agreement
+*  or allowed by law, you may not use, copy, reproduce,
+*  translate, broadcast, modify, license, transmit, distribute,
+*  exhibit, perform, publish or display any part, in any form or
+*  by any means. Reverse engineering, disassembly, or
+*  decompilation of this software, unless required by law for
+*  interoperability, is prohibited.
+*  The information contained herein is subject to change without
+*  notice and is not warranted to be error-free. If you find any
+*  errors, please report them to us in writing.
+*  
+*  Copyright (C) 1988, 2011, Oracle and/or its affiliates.
+*  All Rights Reserved.
+* ***************************************************************
+-->
+<!--
+-->
+<!--
+*
+-->
+<title>Oracle | PeopleSoft Enterprise Sign-in</title>
+<link href="/SAPROD/styles.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+<!--
+a:link {
+        color: #48598c;
+}
+a:visited {
+        color: #48598C;
+}
+a:hover {
+        color: #48598C;
+}
+a:active {
+        color: #48598C;
+}
+body {
+        margin-left: 0px;
+        margin-top: 0px;
+        margin-right: 0px;
+        margin-bottom: 0px;
+}
+-->
+window.history.forward(1);
+</style></link></head>
+<script language="JavaScript">
+function signin(form)
+    {
+    var docLoc=new String(document.location);
+    var iLast= docLoc.lastIndexOf("?&");
+    if (docLoc.length == (iLast+2))
+        {
+        docLoc = docLoc.substring(0, iLast);
+        }
+
+    if (docLoc.indexOf("?cmd=")==-1 && docLoc.indexOf("?")!=-1)
+        {
+        if (docLoc.indexOf("&cmd=login")==-1)
+            {
+            var i=docLoc.length - 1;
+            var j= docLoc.lastIndexOf("&");
+            if (j!=-1 && i==j)
+                form.action=docLoc+form.action.substring(form.action.indexOf("?")+1,form.action.length);
+            else
+                form.action=docLoc+"&"+form.action.substring(form.action.indexOf("?")+1,form.action.length);
+            }
+        else
+            form.action=docLoc.substring(0,docLoc.indexOf("&cmd=login"))+"&cmd=login"+docLoc.substring(docLoc.indexOf("&languageCd="),docLoc.length);
+        }
+
+    var now=new Date();
+    form.timezoneOffset.value=now.getTimezoneOffset();
+    return ;
+    }
+
+function setFocus()
+    {
+    try
+        {document.login.userid.focus()}
+    catch (e)
+        {};
+    return;
+    }
+
+function setErrorImg()
+    {
+    var login_error = document.getElementById('login_error').innerHTML;
+    var discovery_error = document.getElementById('discovery_error').innerHTML;
+    var browsercheck_error = document.getElementById('browsercheck_error').innerHTML;
+    
+    if (login_error.length != 0 || discovery_error.length != 0 || browsercheck_error.length != 0)
+        {
+        document.getElementById('error_img').style.display = 'block';
+        if (login_error.length != 0)
+            document.getElementById('login_error').style.visibility = 'visible';
+        if (discovery_error.length != 0)
+            document.getElementById('discovery_error').style.visibility = 'visible';
+        document.getElementById('error_link').focus();
+        }
+    else
+        setFocus();
+    }
+
+function clearRecentSearch() {
+    if (typeof(window.sessionStorage) !== "undefined") {
+        try {
+            sessionStorage.clear();
+        } catch (e) {}
+    }
+}
+
+function submitAction(form)
+{
+signin(form);
+form.Submit.disabled=true;
+form.submit();
+}
+</script>
+<body onload="setErrorImg(); clearRecentSearch();">
+<table border="0" cellpadding="0" cellspacing="0" height="99%" width="100%">
+<tr>
+<td align="center" height="96" valign="middle"><img alt="Oracle PeopleSoft logo" height="96" src="/SAPROD/images/OPSE_logo.gif" width="322"/></td>
+</tr>
+<tr>
+<td align="center" height="250" valign="middle"><table border="0" cellpadding="0" cellspacing="0" width="590">
+<tr>
+<td align="center" height="318" valign="top" width="600">
+<table border="0" cellpadding="0" cellspacing="0" height="273" width="100%">
+<tr>
+<td><table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="psloginframe" height="200" valign="middle" width="50%">
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<form action="?cmd=login&amp;languageCd=ENG" autocomplete="off" id="login" method="post" name="login" onsubmit="signin(document.login)">
+<input name="timezoneOffset" type="hidden" value="0">
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<div style="text-align:center">
+<h1 id="error_img" style="display:none"><a href="javascript:setFocus();" id="error_link" tabindex="1"><img alt="Error" border="0" src="/SAPROD/images/PT_LOGIN_ERROR.gif"/></a></h1>
+<h2 class="psloginerror" id="login_error" style="visibility:hidden">User ID and Password are required.</h2>
+<h2 class="psloginerror" id="discovery_error" style="visibility:hidden"></h2>
+</div>
+<div class="psloginerror" id="browsercheck_error" style="text-align:left"></div>
+</tr>
+<tr>
+<td align="right" height="25" width="45%"><label class="psloginlabel" for="userid">User ID:</label></td>
+<td height="25" width="1%"> </td>
+<td height="25" width="54%"><input class="pslogineditbox" id="userid" name="userid" size="15" tabindex="2" type="text" value=""/></td></tr></table></input></form></table></td></tr></table></td></tr></table></td></tr></table></td></tr></table></body></html>
+
+<tr>
+<td align="right" height="35"><label class="psloginlabel" for="pwd">Password:</label></td>
+<td height="35"> </td>
+<td height="35"><input class="pslogineditbox" id="pwd" name="pwd" size="15" tabindex="3" type="password"/></td>
+</tr>
+<tr>
+<td height="35"> </td>
+<td height="35"> </td>
+<td height="35"><input class="psloginbutton" name="Submit" onclick="submitAction(document.login)" tabindex="4" type="submit" value="Sign In"/></td>
+</tr>
+
+<td align="center" class="pslanguageframe" rowspan="2" width="50%"><table border="0" cellpadding="0" cellspacing="0" width="90%">
+<tr>
+<td class="psloginlabel" height="25" valign="middle">Select a Language:</td>
+</tr>
+<tr>
+<td class="psloginlabel" valign="top"><table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="pslogintext" width="50%"><a href="?&amp;cmd=login&amp;languageCd=ENG" title="English">English</a></td>
+<td class="pslogintext" width="50%"><a href="?&amp;cmd=login&amp;languageCd=ESP" title="Spanish">Español</a></td>
+</tr>
+<tr>
+<td class="pslogintext" width="50%"><a href="?&amp;cmd=login&amp;languageCd=DAN" title="Danish">Dansk</a></td>
+<td class="pslogintext" width="50%"><a href="?&amp;cmd=login&amp;languageCd=GER" title="German">Deutsch</a></td>
+</tr>
+<tr>
+<td class="pslogintext" width="50%"><a href="?&amp;cmd=login&amp;languageCd=FRA" title="French">Français</a></td>
+<td class="pslogintext" width="50%"><a href="?&amp;cmd=login&amp;languageCd=CFR" title="Canadian French">Français du Canada</a></td>
+</tr>
+<tr>
+<td class="pslogintext" width="50%"><a href="?&amp;cmd=login&amp;languageCd=ITA" title="Italian">Italiano</a></td>
+<td class="pslogintext" width="50%"><a href="?&amp;cmd=login&amp;languageCd=HUN" title="Hungarian">Magyar</a></td>
+</tr>
+<tr>
+<td class="pslogintext" width="50%"><a href="?&amp;cmd=login&amp;languageCd=DUT" title="Dutch">Nederlands</a></td>
+<td class="pslogintext" width="50%"><a href="?&amp;cmd=login&amp;languageCd=NOR" title="Norwegian">Norsk</a></td>
+</tr>
+<tr>
+<td class="pslogintext" width="50%"><a href="?&amp;cmd=login&amp;languageCd=POL" title="Polish">Polski</a></td>
+<td class="pslogintext" width="50%"><a href="?&amp;cmd=login&amp;languageCd=POR" title="Portuguese">Português</a></td>
+</tr>
+<tr>
+<td class="pslogintext" width="50%"><a href="?&amp;cmd=login&amp;languageCd=FIN" title="Finnish">Suomi</a></td>
+<td class="pslogintext" width="50%"><a href="?&amp;cmd=login&amp;languageCd=SVE" title="Swedish">Svenska</a></td>
+</tr>
+<tr>
+<td class="textnormal" width="50%"><a href="?&amp;cmd=login&amp;languageCd=CZE"><img alt="Czech" border="0" height="16" src="/SAPROD/images/language_cze.gif" title="Czech" width="44"/></a></td>
+<td class="textnormal" width="50%"><a href="?&amp;cmd=login&amp;languageCd=JPN"><img alt="Japanese" border="0" height="16" src="/SAPROD/images/language_japanese.gif" title="Japanese" width="37"/></a></td>
+</tr>
+<tr>
+<td class="textnormal" width="50%"><a href="?&amp;cmd=login&amp;languageCd=KOR"><img alt="Korean" border="0" height="16" src="/SAPROD/images/korean.gif" title="Korean" width="34"/></a></td>
+<td class="textnormal" width="50%"><a href="?&amp;cmd=login&amp;languageCd=RUS"><img alt="Russian" border="0" height="16" src="/SAPROD/images/language_rus.gif" title="Russian" width="50"/></a></td>
+</tr>
+<tr>
+<td class="textnormal" width="50%"><a href="?&amp;cmd=login&amp;languageCd=THA"><img alt="Thai" border="0" height="16" src="/SAPROD/images/language_tha.gif" title="Thai" width="24"/></a></td>
+<td class="textnormal" width="50%"><a href="?&amp;cmd=login&amp;languageCd=ZHS"><img alt="Simplified Chinese" border="0" height="16" src="/SAPROD/images/schinese.gif" title="Simplified Chinese" width="53"/></a></td>
+</tr>
+<tr>
+<td class="textnormal" width="50%"><a href="?&amp;cmd=login&amp;languageCd=ZHT"><img alt="Traditional Chinese" border="0" height="16" src="/SAPROD/images/tchinese.gif" title="Traditional Chinese" width="53"/></a></td>
+<td class="textnormal" width="50%"><a href="?&amp;cmd=login&amp;languageCd=ARA"><img alt="Arabic" border="0" height="16" src="/SAPROD/images/arabic.gif" title="Arabic" width="32"/></a></td>
+</tr>
+<tr>
+<td class="pslogintext" width="50%"><a href="?&amp;cmd=login&amp;languageCd=UKE" title="UK English">UK English</a></td>
+</tr>
+</table></td>
+</tr>
+</table></td>
+
+<tr>
+<td class="psmessageframe" height="80" valign="middle">
+<table border="0" cellpadding="5" cellspacing="0" width="100%">
+<tr>
+<td><div style="text-align:center"><p class="pslogintext"></p></div></td>
+</tr>
+</table></td>
+</tr>
+
+
+
+
+<tr>
+<td align="center"> </td>
+</tr>
+
+
+
+<tr>
+<td valign="bottom"><table border="0" cellpadding="5" cellspacing="0" width="100%">
+<tr>
+<td class="pslogincopyright" colspan="2" height="30" valign="bottom"> </td>
+</tr>
+<tr>
+<td class="pslogincopyright" valign="bottom" width="50%">Copyright © 2000, 2011, Oracle and/or its affiliates. All rights reserved. Oracle is a registered trademark of Oracle Corporation and/or its affiliates. Other names may be trademarks of their respective owners.</td>
+<td width="569"> </td>
+</tr>
+</table></td>
+</tr>

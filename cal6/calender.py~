@@ -1,0 +1,48 @@
+from kivy.uix.floatlayout import FloatLayout
+from kivy.graphics import *
+from kivy.uix.label import Label
+from kivy.uix.button import Button
+from kivy.core.window import Window 
+
+from helpers import times, split_time
+
+def set_origin(ox, oy):
+    def give_point(a,b):
+        return 0.0 + ox + a, 0.0 + oy + b
+    return give_point
+
+class Calender(FloatLayout):
+    def __init__(self, *args, **kwargs):
+        super(Calender, self).__init__(*args, **kwargs)
+        w, h = Window.width, Window.height * .57  # Hard-coded screen size.
+        #Set up a common grid between labels and canvases. Also, create a blank space around the grid. 
+        self.xbuff, self.ybuff = .05 * w, .10 * 2 * h
+        self.ygap = (2 * h - self.ybuff) / len(times)
+        self.label_point = set_origin( (-w/2) + self.xbuff, -h + (self.ybuff/2.0) )
+        self.canvas_point = set_origin( self.xbuff, self.ybuff/2.0 )
+
+    def build_border( self ):
+        for i in range(len(times)):
+            self.add_widget( Label( pos=self.label_point( 0, i * self.ygap ), 
+                                    text=times[i], 
+                                    font_size=16) )
+            with self.canvas:
+                Color(0, .5, .5, .5)
+                p1, p2 = self.canvas_point(0, i * self.ygap), self.canvas_point( 1000, i * self.ygap )
+                Line(points=list( p1 + p2 ), width=1)
+
+    def add_block( self, start, end, color, text ):
+        shr, smin = split_time(start.strip()) # 11:53P ---> 11:00P, 53
+        ehr, emin = split_time(end.strip())
+        y1, y2 = (times.index(shr) + smin/60.0) * self.ygap, \
+                 (times.index(ehr) + emin/60.0) * self.ygap
+        w = Window.width
+        left_edge = .15 * w
+        r, g, b = color
+        with self.canvas:
+            Color(r,g,b,.5)
+            pos = self.canvas_point(left_edge,y1)
+            Rectangle(pos=pos, size=( w, y2-y1 ) )
+        pos = self.label_point(2*left_edge, y1 + (y2-y1)/2.0)
+        label = Label(text=text, pos=pos, font_size=16)
+        self.add_widget( label ) 
